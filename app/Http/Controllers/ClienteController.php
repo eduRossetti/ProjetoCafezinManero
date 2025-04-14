@@ -8,90 +8,123 @@ use Illuminate\Http\Request;
 class ClienteController extends Controller
 {
     /**
-     * Exibe todos os clientes.
+     * Display a listing of the resource.
      */
     public function index()
     {
-        $clientes = Cliente::all(); // Pega todos os clientes
-        return view('clientes.index', compact('clientes')); // Retorna a view com os clientes
+        $clientes = Cliente::all();
+        return view('clientes', ['data' => $clientes]);
     }
 
     /**
-     * Exibe o formulário para criar um novo cliente.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('clientes.create'); // Retorna a view de criação
+        return view('clientes.form');
     }
 
     /**
-     * Salva um novo cliente no banco de dados.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // Validação dos dados
         $request->validate([
             'name' => 'required|string|max:255',
-            'cpf' => 'required|string|max:14|unique:clientes',
-            'email' => 'required|email|unique:clientes',
-            'telefone' => 'required|string|max:15|unique:clientes',
+            'cpf' => 'required|string|max:255|unique:clientes',
+            'email' => 'required|email|max:255|unique:clientes',
+            'telefone' => 'required|string|max:255|unique:clientes',
         ]);
 
-        // Criação do cliente
-        Cliente::create($request->all());
+        $data = [
+            'name' => $request->name,
+            'cpf' => $request->cpf,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+        ];
 
-        // Redireciona para a lista de clientes
-        return redirect()->route('clientes.index');
+        Cliente::create($data);
+        return redirect('clientes');
     }
 
     /**
-     * Exibe os detalhes de um cliente.
+     * Display the specified resource.
      */
-    public function show($id)
+    public function show(Cliente $cliente)
     {
-        $cliente = Cliente::findOrFail($id); // Encontra o cliente pelo ID
-        return view('clientes.show', compact('cliente')); // Retorna a view com o cliente
+        return view('clientes.show', ['cliente' => $cliente]);
     }
 
     /**
-     * Exibe o formulário para editar um cliente.
+     * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $cliente = Cliente::findOrFail($id); // Encontra o cliente para editar
-        return view('clientes.edit', compact('cliente')); // Retorna a view de edição
+        $cliente = Cliente::find($id);
+        if (!$cliente) {
+            return redirect('clientes')->with('error', 'Cliente not found');
+        }
+        return view('clientes.form', ['cliente' => $cliente]);
     }
 
     /**
-     * Atualiza os dados de um cliente no banco de dados.
+     * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        // Validação dos dados
+        $cliente = Cliente::find($id);
+        if (!$cliente) {
+            return redirect('clientes')->with('error', 'Cliente not found');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'cpf' => 'required|string|max:14|unique:clientes,cpf,' . $id,
-            'email' => 'required|email|unique:clientes,email,' . $id,
-            'telefone' => 'required|string|max:15|unique:clientes,telefone,' . $id,
+            'cpf' => 'required|string|max:255|unique:clientes,cpf,' . $id,
+            'email' => 'required|email|max:255|unique:clientes,email,' . $id,
+            'telefone' => 'required|string|max:255|unique:clientes,telefone,' . $id,
         ]);
 
-        // Encontra o cliente e atualiza os dados
-        $cliente = Cliente::findOrFail($id);
-        $cliente->update($request->all());
+        $data = [
+            'name' => $request->name,
+            'cpf' => $request->cpf,
+            'email' => $request->email,
+            'telefone' => $request->telefone,
+        ];
 
-        // Redireciona para a lista de clientes
-        return redirect()->route('clientes.index');
+        $cliente->update($data);
+        return redirect('clientes');
     }
 
     /**
-     * Deleta um cliente do banco de dados.
+     * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $cliente = Cliente::findOrFail($id); // Encontra o cliente para deletar
-        $cliente->delete(); // Deleta o cliente
+        $cliente = Cliente::find($id);
+        if (!$cliente) {
+            return redirect('clientes')->with('error', 'Cliente not found');
+        }
+        $cliente->delete();
+        return redirect('clientes');
+    }
 
-        // Redireciona para a lista de clientes
-        return redirect()->route('clientes.index');
+    /**
+     * Search for cliente by various fields.
+     */
+    public function search(Request $request)
+    {
+        if (!empty($request->value)) {
+            $value = $request->value;
+            $type = $request->type;
+
+            $data = Cliente::where($type, 'like', "%$value%")->get();
+            if (empty($data)) {
+                return view("clientes.list", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
+            }
+        } else {
+            $data = Cliente::all();
+        }
+
+        return view("clientes.list", ['data' => $data]);
     }
 }

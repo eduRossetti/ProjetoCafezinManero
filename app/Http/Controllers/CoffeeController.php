@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Coffee;
+use App\Models\Fornecedor;
 use Illuminate\Http\Request;
 
 class CoffeeController extends Controller
@@ -11,7 +13,8 @@ class CoffeeController extends Controller
      */
     public function index()
     {
-        //
+        $coffee = Coffee::all();
+        return view('coffee', ['data' => $coffee]);
     }
 
     /**
@@ -19,7 +22,8 @@ class CoffeeController extends Controller
      */
     public function create()
     {
-        //
+        $fornecedores = Fornecedor::all();
+        return view('coffee.form', ['fornecedores' => $fornecedores]);
     }
 
     /**
@@ -27,15 +31,32 @@ class CoffeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'seal' => 'required|string|max:255',
+            'fornecedores_id' => 'required|exists:fornecedores,id',
+            'barcode' => 'required|string|max:255|unique:coffee',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'seal' => $request->seal,
+            'fornecedores_id' => $request->fornecedores_id,
+            'barcode' => $request->barcode,
+            'price' => $request->price,
+        ];
+
+        Coffee::create($data);
+        return redirect('coffee');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Coffee $coffee)
     {
-        //
+        return view('coffee.show', ['coffee' => $coffee]);
     }
 
     /**
@@ -43,7 +64,12 @@ class CoffeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $coffee = Coffee::find($id);
+        if (!$coffee) {
+            return redirect('coffee')->with('error', 'Coffee not found');
+        }
+        $fornecedores = Fornecedor::all();
+        return view('coffee.form', ['coffee' => $coffee, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -51,7 +77,29 @@ class CoffeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $coffee = Coffee::find($id);
+        if (!$coffee) {
+            return redirect('coffee')->with('error', 'Coffee not found');
+        }
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'seal' => 'required|string|max:255',
+            'fornecedores_id' => 'required|exists:fornecedores,id',
+            'barcode' => 'required|string|max:255|unique:coffee,barcode,' . $id,
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'seal' => $request->seal,
+            'fornecedores_id' => $request->fornecedores_id,
+            'barcode' => $request->barcode,
+            'price' => $request->price,
+        ];
+
+        $coffee->update($data);
+        return redirect('coffee');
     }
 
     /**
@@ -59,6 +107,31 @@ class CoffeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $coffee = Coffee::find($id);
+        if (!$coffee) {
+            return redirect('coffee')->with('error', 'Coffee not found');
+        }
+        $coffee->delete();
+        return redirect('coffee');
+    }
+
+    /**
+     * Search for coffee by various fields.
+     */
+    public function search(Request $request)
+    {
+        if (!empty($request->value)) {
+            $value = $request->value;
+            $type = $request->type;
+
+            $data = Coffee::where($type, 'like', "%$value%")->get();
+            if (empty($data)) {
+                return view("coffee.list", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
+            }
+        } else {
+            $data = Coffee::all();
+        }
+
+        return view("coffee.list", ['data' => $data]);
     }
 }

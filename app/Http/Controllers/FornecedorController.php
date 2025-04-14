@@ -8,92 +8,127 @@ use Illuminate\Http\Request;
 class FornecedorController extends Controller
 {
     /**
-     * Exibe todos os fornecedores.
+     * Display a listing of the resource.
      */
     public function index()
     {
-        $fornecedores = Fornecedor::all(); // Pega todos os fornecedores
-        return view('fornecedores.index', compact('fornecedores')); // Retorna a view com os fornecedores
+        $fornecedores = Fornecedor::all();
+        return view('fornecedores', ['data' => $fornecedores]);
     }
 
     /**
-     * Exibe o formulário para criar um novo fornecedor.
+     * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('fornecedores.create'); // Retorna a view de criação
+        return view('fornecedores.form');
     }
 
     /**
-     * Salva um novo fornecedor no banco de dados.
+     * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        // Validação dos dados
         $request->validate([
             'name' => 'required|string|max:255',
-            'cnpj' => 'required|string|max:18|unique:fornecedores',
-            'email' => 'required|email|unique:fornecedores',
-            'uf' => 'required|string|max:2',
+            'cnpj' => 'required|string|max:255|unique:fornecedores',
+            'email' => 'required|email|max:255|unique:fornecedores',
+            'uf' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
         ]);
 
-        // Criação do fornecedor
-        Fornecedor::create($request->all());
+        $data = [
+            'name' => $request->name,
+            'cnpj' => $request->cnpj,
+            'email' => $request->email,
+            'uf' => $request->uf,
+            'cidade' => $request->cidade,
+        ];
 
-        // Redireciona para a lista de fornecedores
-        return redirect()->route('fornecedores.index');
+        Fornecedor::create($data);
+        return redirect('fornecedores');
     }
 
     /**
-     * Exibe os detalhes de um fornecedor.
+     * Display the specified resource.
      */
-    public function show($id)
+    public function show(Fornecedor $fornecedor)
     {
-        $fornecedor = Fornecedor::findOrFail($id); // Encontra o fornecedor pelo ID
-        return view('fornecedores.show', compact('fornecedor')); // Retorna a view com o fornecedor
+        return view('fornecedores.show', ['fornecedor' => $fornecedor]);
     }
 
     /**
-     * Exibe o formulário para editar um fornecedor.
+     * Show the form for editing the specified resource.
      */
-    public function edit($id)
+    public function edit(string $id)
     {
-        $fornecedor = Fornecedor::findOrFail($id); // Encontra o fornecedor para editar
-        return view('fornecedores.edit', compact('fornecedor')); // Retorna a view de edição
+        $fornecedor = Fornecedor::find($id);
+        if (!$fornecedor) {
+            return redirect('fornecedores')->with('error', 'Fornecedor not found');
+        }
+        return view('fornecedores.form', ['fornecedor' => $fornecedor]);
     }
 
     /**
-     * Atualiza os dados de um fornecedor no banco de dados.
+     * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, string $id)
     {
-        // Validação dos dados
+        $fornecedor = Fornecedor::find($id);
+        if (!$fornecedor) {
+            return redirect('fornecedores')->with('error', 'Fornecedor not found');
+        }
+
         $request->validate([
             'name' => 'required|string|max:255',
-            'cnpj' => 'required|string|max:18|unique:fornecedores,cnpj,' . $id,
-            'email' => 'required|email|unique:fornecedores,email,' . $id,
-            'uf' => 'required|string|max:2',
+            'cnpj' => 'required|string|max:255|unique:fornecedores,cnpj,' . $id,
+            'email' => 'required|email|max:255|unique:fornecedores,email,' . $id,
+            'uf' => 'required|string|max:255',
             'cidade' => 'required|string|max:255',
         ]);
 
-        // Encontra o fornecedor e atualiza os dados
-        $fornecedor = Fornecedor::findOrFail($id);
-        $fornecedor->update($request->all());
+        $data = [
+            'name' => $request->name,
+            'cnpj' => $request->cnpj,
+            'email' => $request->email,
+            'uf' => $request->uf,
+            'cidade' => $request->cidade,
+        ];
 
-        // Redireciona para a lista de fornecedores
-        return redirect()->route('fornecedores.index');
+        $fornecedor->update($data);
+        return redirect('fornecedores');
     }
 
     /**
-     * Deleta um fornecedor do banco de dados.
+     * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function destroy(string $id)
     {
-        $fornecedor = Fornecedor::findOrFail($id); // Encontra o fornecedor para deletar
-        $fornecedor->delete(); // Deleta o fornecedor
+        $fornecedor = Fornecedor::find($id);
+        if (!$fornecedor) {
+            return redirect('fornecedores')->with('error', 'Fornecedor not found');
+        }
+        $fornecedor->delete();
+        return redirect('fornecedores');
+    }
 
-        // Redireciona para a lista de fornecedores
-        return redirect()->route('fornecedores.index');
+    /**
+     * Search for fornecedor by various fields.
+     */
+    public function search(Request $request)
+    {
+        if (!empty($request->value)) {
+            $value = $request->value;
+            $type = $request->type;
+
+            $data = Fornecedor::where($type, 'like', "%$value%")->get();
+            if (empty($data)) {
+                return view("fornecedores.list", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
+            }
+        } else {
+            $data = Fornecedor::all();
+        }
+
+        return view("fornecedores.list", ['data' => $data]);
     }
 }

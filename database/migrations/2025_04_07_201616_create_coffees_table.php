@@ -1,33 +1,102 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+namespace App\Http\Controllers;
 
-return new class extends Migration
+use App\Models\Coffee;
+use App\Models\Fornecedor;
+use Illuminate\Http\Request;
+
+class CoffeeController extends Controller
 {
     /**
-     * Run the migrations.
+     * Exibe todos os cafés.
      */
-    public function up(): void
+    public function index()
     {
-        Schema::create('coffees', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string("name");
-            $table->string("seal");
-            $table->unsignedBigInteger('fornecedores_id');
-            $table->foreign('fornecedores_id')->references('id')->on('fornecedores')->onDelete('cascade');
-            $table->string("barcode")->unique();
-            $table->decimal("price", 8, 2);
-        });
+        $coffees = Coffee::with('fornecedor')->get(); // Pega todos os cafés, incluindo as informações do fornecedor
+        return view('coffees.index', compact('coffees')); // Retorna a view com os cafés
     }
 
     /**
-     * Reverse the migrations.
+     * Exibe o formulário para criar um novo café.
      */
-    public function down(): void
+    public function create()
     {
-        Schema::dropIfExists('coffees');
+        $fornecedores = Fornecedor::all(); // Pega todos os fornecedores para selecionar no formulário
+        return view('coffees.create', compact('fornecedores')); // Retorna a view de criação com fornecedores
     }
-};
+
+    /**
+     * Salva um novo café no banco de dados.
+     */
+    public function store(Request $request)
+    {
+        // Validação dos dados
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'seal' => 'required|string|max:255',
+            'fornecedores_id' => 'required|exists:fornecedores,id',
+            'barcode' => 'required|string|max:255|unique:coffees',
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Criação do café
+        Coffee::create($request->all());
+
+        // Redireciona para a lista de cafés
+        return redirect()->route('coffees.index');
+    }
+
+    /**
+     * Exibe os detalhes de um café.
+     */
+    public function show($id)
+    {
+        $coffee = Coffee::with('fornecedor')->findOrFail($id); // Encontra o café com o fornecedor associado
+        return view('coffees.show', compact('coffee')); // Retorna a view com o café
+    }
+
+    /**
+     * Exibe o formulário para editar um café.
+     */
+    public function edit($id)
+    {
+        $coffee = Coffee::findOrFail($id); // Encontra o café para editar
+        $fornecedores = Fornecedor::all(); // Pega todos os fornecedores
+        return view('coffees.edit', compact('coffee', 'fornecedores')); // Retorna a view de edição
+    }
+
+    /**
+     * Atualiza os dados de um café no banco de dados.
+     */
+    public function update(Request $request, $id)
+    {
+        // Validação dos dados
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'seal' => 'required|string|max:255',
+            'fornecedores_id' => 'required|exists:fornecedores,id',
+            'barcode' => 'required|string|max:255|unique:coffees,barcode,' . $id,
+            'price' => 'required|numeric|min:0',
+        ]);
+
+        // Encontra o café e atualiza os dados
+        $coffee = Coffee::findOrFail($id);
+        $coffee->update($request->all());
+
+        // Redireciona para a lista de cafés
+        return redirect()->route('coffees.index');
+    }
+
+    /**
+     * Deleta um café do banco de dados.
+     */
+    public function destroy($id)
+    {
+        $coffee = Coffee::findOrFail($id); // Encontra o café para deletar
+        $coffee->delete(); // Deleta o café
+
+        // Redireciona para a lista de cafés
+        return redirect()->route('coffees.index');
+    }
+}

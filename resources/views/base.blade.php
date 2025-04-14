@@ -9,11 +9,10 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!--Esse é o Bootstrap (meio que a importação para os estilos)-->
 </head>
 
 <body style="background:#e2e2e2">
-    @include('navbar')
+    @include('nav')
     <div class="container mt-04">
         @if ($errors->any())
         <div class="alert alert-danger">

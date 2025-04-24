@@ -21,7 +21,7 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('clientes.form');
+        return view('clientes.create');
     }
 
     /**
@@ -64,7 +64,7 @@ class ClienteController extends Controller
         if (!$cliente) {
             return redirect('clientes')->with('error', 'Cliente not found');
         }
-        return view('clientes.form', ['cliente' => $cliente]);
+        return view('clientes.edit', ['cliente' => $cliente]);
     }
 
     /**

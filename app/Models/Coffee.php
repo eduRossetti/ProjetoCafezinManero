@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Coffee extends Model
 {
     use HasFactory;
-    protected $table = "coffees";
+    protected $table = "coffee";
 
     protected $fillable = [
         "name",
@@ -17,4 +17,9 @@ class Coffee extends Model
         "barcode",
         "price",
     ];
+    
+    public function fornecedor()
+    {
+        return $this->belongsTo(Fornecedor::class, 'fornecedores_id');
+    }
 }

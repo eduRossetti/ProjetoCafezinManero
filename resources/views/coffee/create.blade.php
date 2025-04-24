@@ -31,9 +31,16 @@
 
         <div class="mb-3">
             <label for="seal" class="form-label">Selo</label>
-            <input type="text" name="seal" class="form-control" id="seal" value="{{ old('seal', $coffee->seal ?? '') }}"
-                required>
+            <select name="seal" class="form-select" required>
+                <option value="">Selecione um selo</option>
+                <option value="Extraforte" {{ old('seal', $coffee->seal ?? '') == 'Extraforte' ? 'selected' : '' }}>Extraforte</option>
+                <option value="Tradicional" {{ old('seal', $coffee->seal ?? '') == 'Tradicional' ? 'selected' : '' }}>Tradicional</option>
+                <option value="Gourmet" {{ old('seal', $coffee->seal ?? '') == 'Gourmet' ? 'selected' : '' }}>Gourmet</option>
+                <option value="Superior" {{ old('seal', $coffee->seal ?? '') == 'Superior' ? 'selected' : '' }}>Superior</option>
+                <option value="Especial" {{ old('seal', $coffee->seal ?? '') == 'Especial' ? 'selected' : '' }}>Especial</option>
+            </select>
         </div>
+
 
         <div class="mb-3">
             <label for="fornecedores_id" class="form-label">Fornecedor</label>
@@ -51,8 +58,9 @@
         <div class="mb-3">
             <label for="barcode" class="form-label">Código de Barras</label>
             <input type="text" name="barcode" class="form-control" id="barcode"
-                value="{{ old('barcode', $coffee->barcode ?? '') }}" required>
+                value="{{ old('barcode', $coffee->barcode ?? '') }}" placeholder="123456789012" required>
         </div>
+
 
         <div class="mb-3">
             <label for="price" class="form-label">Preço</label>

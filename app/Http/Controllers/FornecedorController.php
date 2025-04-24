@@ -21,7 +21,7 @@ class FornecedorController extends Controller
      */
     public function create()
     {
-        return view('fornecedores.form');
+        return view('fornecedores.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class FornecedorController extends Controller
         if (!$fornecedor) {
             return redirect('fornecedores')->with('error', 'Fornecedor not found');
         }
-        return view('fornecedores.form', ['fornecedor' => $fornecedor]);
+        return view('fornecedores.edit', ['fornecedor' => $fornecedor]);
     }
 
     /**

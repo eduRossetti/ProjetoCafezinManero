@@ -23,7 +23,7 @@ class CoffeeController extends Controller
     public function create()
     {
         $fornecedores = Fornecedor::all();
-        return view('coffee.form', ['fornecedores' => $fornecedores]);
+        return view('coffee.create', ['fornecedores' => $fornecedores]);
     }
 
     /**
@@ -69,7 +69,7 @@ class CoffeeController extends Controller
             return redirect('coffee')->with('error', 'Coffee not found');
         }
         $fornecedores = Fornecedor::all();
-        return view('coffee.form', ['coffee' => $coffee, 'fornecedores' => $fornecedores]);
+        return view('coffee.edit', ['coffee' => $coffee, 'fornecedores' => $fornecedores]);
     }
 
     /**

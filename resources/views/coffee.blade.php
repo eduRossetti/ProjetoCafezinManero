@@ -7,12 +7,10 @@
 <div class="container mt-4">
     <h2 class="mb-4">Grãos de Café</h2>
 
-
     {{-- Formulário de busca --}}
     <form method="GET" action="{{ route('coffee.index') }}" class="row mb-4">
         <div class="col-md-6">
-            <input type="text" name="value" class="form-control"
-                placeholder="Buscar por nome, selo ou código de barras">
+            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, selo ou código de barras">
         </div>
         <div class="col-md-4">
             <select name="type" class="form-select">
@@ -49,11 +47,14 @@
                 <td>{{ $coffee->barcode }}</td>
                 <td>R$ {{ number_format($coffee->price, 2, ',', '.') }}</td>
                 <td>
-                    <form action="{{ route('coffee.destroy', $coffee->id) }}" method="POST">
+                    {{-- Botão Editar --}}
+                    <a href="{{ route('coffee.edit', $coffee->id) }}" class="btn btn-sm btn-warning">Editar</a>
+
+                    {{-- Botão Excluir --}}
+                    <form action="{{ route('coffee.destroy', $coffee->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este café?')"
-                            class="btn btn-sm btn-danger">Excluir</button>
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este café?')" class="btn btn-sm btn-danger">Excluir</button>
                     </form>
                 </td>
             </tr>

@@ -117,14 +117,18 @@ class ClienteController extends Controller
             $value = $request->value;
             $type = $request->type;
 
+            // Filter the data based on the search type and value
             $data = Cliente::where($type, 'like', "%$value%")->get();
-            if (empty($data)) {
-                return view("clientes.list", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
+
+            // Check if the collection is empty
+            if ($data->isEmpty()) {
+                return view("clientes", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
             }
         } else {
+            // If no search value is provided, return all clients
             $data = Cliente::all();
         }
 
-        return view("clientes.list", ['data' => $data]);
+        return view("clientes", ['data' => $data]);
     }
 }

@@ -13,7 +13,7 @@ class ClienteController extends Controller
     public function index()
     {
         $clientes = Cliente::all();
-        return view('clientes', ['data' => $clientes]);
+        return view('clientes.list', ['data' => $clientes]);
     }
 
     /**
@@ -117,18 +117,14 @@ class ClienteController extends Controller
             $value = $request->value;
             $type = $request->type;
 
-            // Filter the data based on the search type and value
             $data = Cliente::where($type, 'like', "%$value%")->get();
-
-            // Check if the collection is empty
-            if ($data->isEmpty()) {
-                return view("clientes", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
+            if (empty($data)) {
+                return view("clientes.list", ['data' => $data])->with('error', 'Nenhum resultado.');
             }
         } else {
-            // If no search value is provided, return all clients
             $data = Cliente::all();
         }
 
-        return view("clientes", ['data' => $data]);
+        return view("clientes.list", ['data' => $data]);
     }
 }

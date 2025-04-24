@@ -5,13 +5,6 @@
 <div class="container mt-4">
     <h2 class="mb-4">Clientes</h2>
 
-    {{-- Display error message --}}
-    @if (session('error'))
-        <div class="alert alert-danger">
-            {{ session('error') }}
-        </div>
-    @endif
-
     <form method="GET" action="{{ route('clientes.search') }}" class="row mb-4">
         <div class="col-md-6">
             <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
@@ -41,30 +34,24 @@
             </tr>
         </thead>
         <tbody>
-            @if ($data->isEmpty())
-                <tr>
-                    <td colspan="6" class="text-center">Nenhum cliente encontrado.</td>
-                </tr>
-            @else
-                @foreach ($data as $cliente)
-                <tr>
-                    <td>{{ $cliente->id }}</td>
-                    <td>{{ $cliente->name }}</td>
-                    <td>{{ $cliente->cpf }}</td>
-                    <td>{{ $cliente->email }}</td>
-                    <td>{{ $cliente->telefone }}</td>
-                    <td>
-                        <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-sm btn-warning">Editar</a>
+            @foreach ($data as $clientes)
+            <tr>
+                <td>{{ $clientes->id }}</td>
+                <td>{{ $clientes->name }}</td>
+                <td>{{ $clientes->cpf }}</td>
+                <td>{{ $clientes->email }}</td>
+                <td>{{ $clientes->telefone }}</td>
+                <td>
+                    <a href="{{ route('clientes.edit', $clientes->id) }}" class="btn btn-sm btn-warning">Editar</a>
 
-                        <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" class="d-inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este cliente?')" class="btn btn-sm btn-danger">Excluir</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            @endif
+                    <form action="{{ route('clientes.destroy', $clientes->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este cliente?')" class="btn btn-sm btn-danger">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
         </tbody>
     </table>
 

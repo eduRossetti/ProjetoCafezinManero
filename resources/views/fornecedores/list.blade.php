@@ -5,7 +5,7 @@
 <div class="container mt-4">
     <h2 class="mb-4">Fornecedores</h2>
 
-    <form method="GET" action="{{ route('fornecedores.index') }}" class="row mb-4">
+    <form method="GET" action="{{ route('fornecedores.search') }}" class="row mb-4">
         <div class="col-md-6">
             <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
         </div>

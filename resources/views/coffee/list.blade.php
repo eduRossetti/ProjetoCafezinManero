@@ -8,7 +8,7 @@
     <h2 class="mb-4">Grãos de Café</h2>
 
     {{-- Formulário de busca --}}
-    <form method="GET" action="{{ route('coffee.index') }}" class="row mb-4">
+    <form method="GET" action="{{ route('coffee.search') }}" class="row mb-4">
         <div class="col-md-6">
             <input type="text" name="value" class="form-control" placeholder="Buscar por nome, selo ou código de barras">
         </div>

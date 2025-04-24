@@ -16,7 +16,7 @@ Route::post('/coffee/store', [CoffeeController::class, 'store'])->name('coffee.s
 Route::delete('coffee/{id}', [CoffeeController::class, 'destroy'])->name('coffee.destroy');
 Route::get('coffee/{id}', [CoffeeController::class, 'edit'])->name('coffee.edit');
 Route::put('coffee/update/{id}', [CoffeeController::class, 'update'])->name('coffee.update');
-Route::post('coffee/', [CoffeeController::class, 'search'])->name('coffee.search');
+Route::post('coffee/search', [CoffeeController::class, 'search'])->name('coffee.search');
 
 use App\Http\Controllers\FornecedorController;
 
@@ -26,7 +26,7 @@ Route::post('/fornecedores/store', [FornecedorController::class, 'store'])->name
 Route::delete('/fornecedores/{id}', [FornecedorController::class, 'destroy'])->name('fornecedores.destroy');
 Route::get('/fornecedores/{id}', [FornecedorController::class, 'edit'])->name('fornecedores.edit');
 Route::put('/fornecedores/update/{id}', [FornecedorController::class, 'update'])->name('fornecedores.update');
-Route::post('/fornecedores', [FornecedorController::class, 'search'])->name('fornecedores.search');
+Route::post('/fornecedores/search', [FornecedorController::class, 'search'])->name('fornecedores.search');
 
 use App\Http\Controllers\ClienteController;
 
@@ -36,4 +36,6 @@ Route::post('/clientes/store', [ClienteController::class, 'store'])->name('clien
 Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
 Route::get('/clientes/{id}', [ClienteController::class, 'edit'])->name('clientes.edit');
 Route::put('/clientes/update/{id}', [ClienteController::class, 'update'])->name('clientes.update');
-Route::post('/clientes', [ClienteController::class, 'search'])->name('clientes.search');
+Route::get('/clientes/search', [ClienteController::class, 'search'])->name('clientes.search');
+
+

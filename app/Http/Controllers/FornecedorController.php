@@ -13,7 +13,7 @@ class FornecedorController extends Controller
     public function index()
     {
         $fornecedores = Fornecedor::all();
-        return view('fornecedores', ['data' => $fornecedores]);
+        return view('fornecedores.list', ['data' => $fornecedores]);
     }
 
     /**
@@ -122,8 +122,8 @@ class FornecedorController extends Controller
             $type = $request->type;
 
             $data = Fornecedor::where($type, 'like', "%$value%")->get();
-            if (empty($data)) {
-                return view("fornecedores.list", ['data' => $data])->with('error', 'Nenhum resultado encontrado.');
+            if ($data->isEmpty()) {
+                return view("fornecedores.list", ['data' => $data])->with('error', 'Nenhum resultado.');
             }
         } else {
             $data = Fornecedor::all();

@@ -66,7 +66,7 @@ class CoffeeController extends Controller
     {
         $coffee = Coffee::find($id);
         if (!$coffee) {
-            return redirect('coffee')->with('error', 'Coffee not found');
+            return redirect('coffee')->with('error', 'Café não encontrado');
         }
         $fornecedores = Fornecedor::all();
         return view('coffee.edit', ['coffee' => $coffee, 'fornecedores' => $fornecedores]);
@@ -79,7 +79,7 @@ class CoffeeController extends Controller
     {
         $coffee = Coffee::find($id);
         if (!$coffee) {
-            return redirect('coffee')->with('error', 'Coffee not found');
+            return redirect('coffee')->with('error', 'Café não encontrado');
         }
 
         $request->validate([
@@ -109,7 +109,7 @@ class CoffeeController extends Controller
     {
         $coffee = Coffee::find($id);
         if (!$coffee) {
-            return redirect('coffee')->with('error', 'Coffee not found');
+            return redirect('coffee')->with('error', 'Café não encontrado');
         }
         $coffee->delete();
         return redirect('coffee');

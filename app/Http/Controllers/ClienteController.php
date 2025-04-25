@@ -62,7 +62,7 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
         if (!$cliente) {
-            return redirect('clientes')->with('error', 'Cliente not found');
+            return redirect('clientes')->with('error', 'Cliente não encontrado');
         }
         return view('clientes.edit', ['cliente' => $cliente]);
     }
@@ -74,7 +74,7 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
         if (!$cliente) {
-            return redirect('clientes')->with('error', 'Cliente not found');
+            return redirect('clientes')->with('error', 'Cliente não encontrado');
         }
 
         $request->validate([
@@ -102,7 +102,7 @@ class ClienteController extends Controller
     {
         $cliente = Cliente::find($id);
         if (!$cliente) {
-            return redirect('clientes')->with('error', 'Cliente not found');
+            return redirect('clientes')->with('error', 'Cliente não encontrado');
         }
         $cliente->delete();
         return redirect('clientes');

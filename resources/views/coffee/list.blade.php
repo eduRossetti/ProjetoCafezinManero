@@ -7,25 +7,29 @@
 <div class="container mt-4">
     <h2 class="mb-4">Grãos de Café</h2>
 
-    {{-- Formulário de busca --}}
-    <form method="POST" action="{{ route('coffee.search') }}" class="row mb-4">
+    <form method="post" action="{{ route('coffee.search') }}" class="row align-items-center g-2 mb-3">
         @csrf
-        <div class="col-md-6">
-            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, selo ou código de barras">
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <select name="type" class="form-select">
                 <option value="name">Nome</option>
                 <option value="seal">Selo</option>
                 <option value="barcode">Código de Barras</option>
             </select>
         </div>
+
+        <div class="col-md-5">
+            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, selo ou código de barras">
+        </div>
+
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Buscar</button>
         </div>
+
+        <div class="col-md-3 text-end">
+            <a href="{{ route('coffee.create') }}" class="btn btn-success w-100">Adicionar Novo Café</a>
+        </div>
     </form>
 
-    {{-- Tabela de listagem --}}
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
@@ -48,10 +52,8 @@
                 <td>{{ $coffee->barcode }}</td>
                 <td>R$ {{ number_format($coffee->price, 2, ',', '.') }}</td>
                 <td>
-                    {{-- Botão Editar --}}
                     <a href="{{ route('coffee.edit', $coffee->id) }}" class="btn btn-sm btn-warning">Editar</a>
 
-                    {{-- Botão Excluir --}}
                     <form action="{{ route('coffee.destroy', $coffee->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')

@@ -6,7 +6,6 @@
 <div class="container mt-4">
     <h2 class="mb-4">{{ isset($coffee) ? 'Editar Café' : 'Adicionar Novo Café' }}</h2>
 
-    {{-- Exibição de erros de validação --}}
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul class="mb-0">
@@ -19,13 +18,9 @@
 
     <form method="POST" action="{{ isset($coffee) ? route('coffee.update', $coffee->id) : route('coffee.store') }}">
         @csrf
-        @if (isset($coffee))
-        @method('PUT')
-        @endif
-
         <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $coffee->name ?? '') }}"
+            <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $coffee->name ?? '') }}" placeholder="Chocolate com Avelã"
                 required>
         </div>
 
@@ -40,7 +35,6 @@
                 <option value="Especial" {{ old('seal', $coffee->seal ?? '') == 'Especial' ? 'selected' : '' }}>Especial</option>
             </select>
         </div>
-
 
         <div class="mb-3">
             <label for="fornecedores_id" class="form-label">Fornecedor</label>
@@ -58,14 +52,13 @@
         <div class="mb-3">
             <label for="barcode" class="form-label">Código de Barras</label>
             <input type="text" name="barcode" class="form-control" id="barcode"
-                value="{{ old('barcode', $coffee->barcode ?? '') }}" placeholder="123456789012" required>
+                value="{{ old('barcode', $coffee->barcode ?? '') }}" placeholder="XXXXXXXXXX" required>
         </div>
-
 
         <div class="mb-3">
             <label for="price" class="form-label">Preço</label>
             <input type="number" step="0.01" name="price" class="form-control" id="price"
-                value="{{ old('price', $coffee->price ?? '') }}" required>
+                value="{{ old('price', $coffee->price ?? '') }}" placeholder="99.99" required>
         </div>
 
         <button type="submit" class="btn btn-primary">

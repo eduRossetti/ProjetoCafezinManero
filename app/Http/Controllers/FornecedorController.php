@@ -64,7 +64,7 @@ class FornecedorController extends Controller
     {
         $fornecedor = Fornecedor::find($id);
         if (!$fornecedor) {
-            return redirect('fornecedores')->with('error', 'Fornecedor not found');
+            return redirect('fornecedores')->with('error', 'Fornecedor não encontrado');
         }
         return view('fornecedores.edit', ['fornecedor' => $fornecedor]);
     }
@@ -76,7 +76,7 @@ class FornecedorController extends Controller
     {
         $fornecedor = Fornecedor::find($id);
         if (!$fornecedor) {
-            return redirect('fornecedores')->with('error', 'Fornecedor not found');
+            return redirect('fornecedores')->with('error', 'Fornecedor não encontrado');
         }
 
         $request->validate([
@@ -106,7 +106,7 @@ class FornecedorController extends Controller
     {
         $fornecedor = Fornecedor::find($id);
         if (!$fornecedor) {
-            return redirect('fornecedores')->with('error', 'Fornecedor not found');
+            return redirect('fornecedores')->with('error', 'Fornecedor não encontrado');
         }
         $fornecedor->delete();
         return redirect('fornecedores');

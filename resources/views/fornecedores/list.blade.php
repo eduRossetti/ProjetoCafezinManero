@@ -5,24 +5,29 @@
 <div class="container mt-4">
     <h2 class="mb-4">Fornecedores</h2>
 
-    <form method="post" action="{{ route('fornecedores.search') }}" class="row mb-4">
+    <form method="post" action="{{ route('fornecedores.search') }}" class="row align-items-center g-2 mb-3">
         @csrf
-        <div class="col-md-6">
-            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
-        </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <select name="type" class="form-select">
                 <option value="name">Nome</option>
                 <option value="cpf">CPF</option>
                 <option value="email">Email</option>
             </select>
         </div>
+
+        <div class="col-md-5">
+            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
+        </div>
+
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Buscar</button>
         </div>
+
+        <div class="col-md-3 text-end">
+            <a href="{{ route('fornecedores.create') }}" class="btn btn-success w-100">Adicionar Novo Fornecedor</a>
+        </div>
     </form>
 
-    {{-- Tabela de listagem --}}
     <table class="table table-striped table-bordered">
         <thead class="table-dark">
             <tr>
@@ -59,9 +64,7 @@
         </tbody>
     </table>
 
-    <div class="text-end">
-        <a href="{{ route('fornecedores.create') }}" class="btn btn-success">Adicionar Novo Fornecedor</a>
-    </div>
+
 </div>
 
 @endsection

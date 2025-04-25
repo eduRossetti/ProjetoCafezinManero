@@ -20,31 +20,31 @@
         <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
             <input type="text" name="name" class="form-control" id="name"
-                   value="{{ old('name') }}" required>
+                   value="{{ old('name') }}" placeholder="Empresa" required>
         </div>
 
         <div class="mb-3">
             <label for="cnpj" class="form-label">CNPJ</label>
             <input type="text" name="cnpj" class="form-control" id="cnpj"
-                   value="{{ old('cnpj') }}" placeholder="Exemplo: 12.345.678/0001-99" required>
+                   value="{{ old('cnpj') }}" placeholder="XX.XXX.XXX/XXXX-XX" required>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">E-mail</label>
             <input type="email" name="email" class="form-control" id="email"
-                   value="{{ old('email') }}" required>
+                   value="{{ old('email') }}" placeholder="emailempresarial@empresa.com" required>
         </div>
 
         <div class="mb-3">
             <label for="uf" class="form-label">UF</label>
             <input type="text" name="uf" class="form-control" id="uf"
-                   value="{{ old('uf') }}" maxlength="2" placeholder="Ex: SP" required>
+                   value="{{ old('uf') }}" maxlength="2" placeholder="SP" required>
         </div>
 
         <div class="mb-3">
             <label for="cidade" class="form-label">Cidade</label>
             <input type="text" name="cidade" class="form-control" id="cidade"
-                   value="{{ old('cidade') }}" required>
+                   value="{{ old('cidade') }}" placeholder="São Paulo" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Salvar</button>

@@ -6,7 +6,6 @@
 <div class="container mt-4">
     <h2 class="mb-4">Editar Café: {{ $coffee->name }}</h2>
 
-    {{-- Exibição de erros de validação --}}
     @if ($errors->any())
     <div class="alert alert-danger">
         <ul class="mb-0">
@@ -53,7 +52,7 @@
 
         <div class="mb-3">
             <label for="barcode" class="form-label">Código de Barras</label>
-            <input type="text" name="barcode" class="form-control" id="barcode" value="{{ old('barcode', $coffee->barcode) }}" placeholder="123456789012" required>
+            <input type="text" name="barcode" class="form-control" id="barcode" value="{{ old('barcode', $coffee->barcode) }}" required>
         </div>
 
         <div class="mb-3">

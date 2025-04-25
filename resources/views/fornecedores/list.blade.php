@@ -5,7 +5,8 @@
 <div class="container mt-4">
     <h2 class="mb-4">Fornecedores</h2>
 
-    <form method="GET" action="{{ route('fornecedores.search') }}" class="row mb-4">
+    <form method="post" action="{{ route('fornecedores.search') }}" class="row mb-4">
+        @csrf
         <div class="col-md-6">
             <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
         </div>
@@ -34,7 +35,7 @@
                 <th>Ações</th>
             </tr>
         </thead>
-        
+
         <tbody>
             @foreach ($data as $fornecedores)
             <tr>

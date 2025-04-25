@@ -11,7 +11,7 @@
          */
         public function up(): void
         {
-            Schema::create('coffees', function (Blueprint $table) {
+            Schema::create('coffee', function (Blueprint $table) {
                 $table->id();
                 $table->timestamps();
                 $table->string("name");
@@ -28,6 +28,6 @@
          */
         public function down(): void
         {
-            Schema::dropIfExists('coffees');
+            Schema::dropIfExists('coffee');
         }
     };

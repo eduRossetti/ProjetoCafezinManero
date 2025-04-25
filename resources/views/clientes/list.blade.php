@@ -5,7 +5,8 @@
 <div class="container mt-4">
     <h2 class="mb-4">Clientes</h2>
 
-    <form method="GET" action="{{ route('clientes.search') }}" class="row mb-4">
+    <form method="post" action="{{ route('clientes.search') }}" class="row mb-4">
+        @csrf
         <div class="col-md-6">
             <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
         </div>

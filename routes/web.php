@@ -36,6 +36,6 @@ Route::post('/clientes/store', [ClienteController::class, 'store'])->name('clien
 Route::delete('/clientes/{id}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
 Route::get('/clientes/{id}', [ClienteController::class, 'edit'])->name('clientes.edit');
 Route::put('/clientes/update/{id}', [ClienteController::class, 'update'])->name('clientes.update');
-Route::get('/clientes/search', [ClienteController::class, 'search'])->name('clientes.search');
+Route::post('/clientes/search', [ClienteController::class, 'search'])->name('clientes.search');
 
 

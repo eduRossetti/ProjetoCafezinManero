@@ -20,26 +20,26 @@
 
         <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
-            <input type="text" name="name" class="form-control" id="name"
-                   value="{{ old('name', $cliente->name) }}" required>
+            <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $cliente->name) }}"
+                required>
         </div>
 
         <div class="mb-3">
             <label for="cpf" class="form-label">CPF</label>
-            <input type="text" name="cpf" class="form-control" id="cpf"
-                   value="{{ old('cpf', $cliente->cpf) }}" placeholder="Exemplo: 123.456.789-00" required>
+            <input type="text" name="cpf" class="form-control" id="cpf" value="{{ old('cpf', $cliente->cpf) }}"
+                placeholder="Exemplo: 123.456.789-00" required>
         </div>
 
         <div class="mb-3">
             <label for="email" class="form-label">E-mail</label>
-            <input type="email" name="email" class="form-control" id="email"
-                   value="{{ old('email', $cliente->email) }}" placeholder="Exemplo: cliente@email.com" required>
+            <input type="email" name="email" class="form-control" id="email" value="{{ old('email', $cliente->email) }}"
+                placeholder="Exemplo: cliente@email.com" required>
         </div>
 
         <div class="mb-3">
             <label for="telefone" class="form-label">Telefone</label>
             <input type="text" name="telefone" class="form-control" id="telefone"
-                   value="{{ old('telefone', $cliente->telefone) }}" placeholder="Exemplo: (11) 91234-5678" required>
+                value="{{ old('telefone', $cliente->telefone) }}" placeholder="Exemplo: (11) 91234-5678" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Atualizar</button>

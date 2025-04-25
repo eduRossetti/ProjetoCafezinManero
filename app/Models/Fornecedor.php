@@ -14,7 +14,7 @@ class Fornecedor extends Model
         "name",
         "cnpj",
         "email",
-        "estado",
+        "uf",
         "cidade",
     ];
 }

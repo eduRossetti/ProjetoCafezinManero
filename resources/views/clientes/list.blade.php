@@ -5,32 +5,19 @@
 <div class="container mt-4">
     <h2 class="mb-4">Clientes</h2>
 
-    <!-- <form method="post" action="{{ route('clientes.search') }}" class="row mb-4">
-        @csrf
-        <div class="col-md-6">
-            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, CPF ou email">
-        </div>
-        <div class="col-md-4">
-            <select name="type" class="form-select">
-                
-            </select>
-        </div>
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-primary w-100">Buscar</button>
-        </div>
-    </form> -->
     <form method="post" action="{{ route('clientes.search') }}" class="row align-items-center g-2 mb-3">
         @csrf
         <div class="col-md-2">
             <select name="type" class="form-select">
-            <option value="name">Nome</option>
+                <option value="name">Nome</option>
                 <option value="cpf">CPF</option>
                 <option value="email">Email</option>
             </select>
         </div>
 
         <div class="col-md-5">
-            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, selo ou código de barras">
+            <input type="text" name="value" class="form-control"
+                placeholder="Buscar por nome, selo ou código de barras">
         </div>
 
         <div class="col-md-2">
@@ -66,7 +53,8 @@
                     <form action="{{ route('clientes.destroy', $clientes->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este cliente?')" class="btn btn-sm btn-danger">Excluir</button>
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir este cliente?')"
+                            class="btn btn-sm btn-danger">Excluir</button>
                     </form>
                 </td>
             </tr>
@@ -74,9 +62,6 @@
         </tbody>
     </table>
 
-    <div class="text-end">
-        <a href="{{ route('clientes.create') }}" class="btn btn-success">Adicionar Novo Cliente</a>
-    </div>
 </div>
 
 @endsection

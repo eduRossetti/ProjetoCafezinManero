@@ -18,7 +18,8 @@
         </div>
 
         <div class="col-md-5">
-            <input type="text" name="value" class="form-control" placeholder="Buscar por nome, selo ou código de barras">
+            <input type="text" name="value" class="form-control"
+                placeholder="Buscar por nome, selo ou código de barras">
         </div>
 
         <div class="col-md-2">
@@ -57,7 +58,8 @@
                     <form action="{{ route('coffee.destroy', $coffee->id) }}" method="POST" class="d-inline">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este café?')" class="btn btn-sm btn-danger">Excluir</button>
+                        <button type="submit" onclick="return confirm('Tem certeza que deseja deletar este café?')"
+                            class="btn btn-sm btn-danger">Excluir</button>
                     </form>
                 </td>
             </tr>
@@ -65,9 +67,6 @@
         </tbody>
     </table>
 
-    <div class="text-end">
-        <a href="{{ route('coffee.create') }}" class="btn btn-success">Adicionar Novo Café</a>
-    </div>
 </div>
 
 @endsection

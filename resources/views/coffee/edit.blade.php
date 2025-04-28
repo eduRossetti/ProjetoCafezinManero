@@ -22,18 +22,23 @@
 
         <div class="mb-3">
             <label for="name" class="form-label">Nome</label>
-            <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $coffee->name) }}" required>
+            <input type="text" name="name" class="form-control" id="name" value="{{ old('name', $coffee->name) }}"
+                required>
         </div>
 
         <div class="mb-3">
             <label for="seal" class="form-label">Selo</label>
             <select name="seal" class="form-select" required>
                 <option value="">Selecione um selo</option>
-                <option value="Extraforte" {{ old('seal', $coffee->seal) == 'Extraforte' ? 'selected' : '' }}>Extraforte</option>
-                <option value="Tradicional" {{ old('seal', $coffee->seal) == 'Tradicional' ? 'selected' : '' }}>Tradicional</option>
+                <option value="Extraforte" {{ old('seal', $coffee->seal) == 'Extraforte' ? 'selected' : '' }}>Extraforte
+                </option>
+                <option value="Tradicional" {{ old('seal', $coffee->seal) == 'Tradicional' ? 'selected' : '' }}>
+                    Tradicional</option>
                 <option value="Gourmet" {{ old('seal', $coffee->seal) == 'Gourmet' ? 'selected' : '' }}>Gourmet</option>
-                <option value="Superior" {{ old('seal', $coffee->seal) == 'Superior' ? 'selected' : '' }}>Superior</option>
-                <option value="Especial" {{ old('seal', $coffee->seal) == 'Especial' ? 'selected' : '' }}>Especial</option>
+                <option value="Superior" {{ old('seal', $coffee->seal) == 'Superior' ? 'selected' : '' }}>Superior
+                </option>
+                <option value="Especial" {{ old('seal', $coffee->seal) == 'Especial' ? 'selected' : '' }}>Especial
+                </option>
             </select>
         </div>
 
@@ -52,12 +57,14 @@
 
         <div class="mb-3">
             <label for="barcode" class="form-label">Código de Barras</label>
-            <input type="text" name="barcode" class="form-control" id="barcode" value="{{ old('barcode', $coffee->barcode) }}" required>
+            <input type="text" name="barcode" class="form-control" id="barcode"
+                value="{{ old('barcode', $coffee->barcode) }}" required>
         </div>
 
         <div class="mb-3">
             <label for="price" class="form-label">Preço</label>
-            <input type="number" step="0.01" name="price" class="form-control" id="price" value="{{ old('price', $coffee->price) }}" required>
+            <input type="number" step="0.01" name="price" class="form-control" id="price"
+                value="{{ old('price', $coffee->price) }}" required>
         </div>
 
         <button type="submit" class="btn btn-primary">Atualizar</button>
